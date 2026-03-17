@@ -1,13 +1,11 @@
-
 #!/bin/bash
 
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 DB_PASSWORD=$(cat /run/secrets/db_password)
 
-
 echo "WordPress: waiting for MariaDB."
-while ! mariadb-admin ping -h mariadb -u "$MYSQL_USER" -p "$DB_PASSWORD" --silent 2>/dev/null; do
+while ! mariadb-admin ping -h mariadb -u "$MYSQL_USER" -p"$DB_PASSWORD" --silent 2>/dev/null; do
 	sleep 2
 done
 
@@ -26,4 +24,4 @@ else
 	echo "WordPress: Already Configured"
 fi
 
-exec php-fpm -F
+exec php-fpm8.2 -F
