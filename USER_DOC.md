@@ -1,107 +1,90 @@
-# User Documentation
+## [   __User Documentation__   ]
 
-## Services
+##  [ Services ]
 
-This stack provides three services:
+    This stack provides three services:
 
-- **NGINX** — web server that handles HTTPS connections on port 443
-- **WordPress** — the website and content management system
-- **MariaDB** — the database that stores all WordPress content
+     NginX:      web server that handles HTTPS connections on port 443.
+     WordPress:  website and content management system
+     MariaDB:    database that stores all WordPress content
 
-## Starting and Stopping
+## [ Starting and Stopping ]
 
-Start the project:
+    Start the project:
 
-```
-make
-```
+     make
 
-Stop the project (data is preserved):
+    Stop the project (data is preserved):
 
-```
-make down
-```
+     make down
 
-Restart after stopping:
+    Restart after stopping:
 
-```
-make
-```
+     make
 
-Full reset (deletes all data and rebuilds from scratch):
+    Full reset (deletes all data):
 
-```
-make re
-```
+     make re
 
-## Accessing the Website
+    Erase data and program:
 
-Open a browser and go to:
+     make clean
 
-```
-https://vcaratti.42.fr
-```
+##  [ Accessing the Website ]
 
-Accept the self-signed certificate warning when prompted.
+    Open a browser and go to:
 
-## Accessing the Administration Panel
+     https://vcaratti.42.fr
 
-Go to:
+    Accept the self-signed certificate warning when prompted.
 
-```
-https://vcaratti.42.fr/wp-admin
-```
+##  [ Accessing the Administration Panel ]
 
-Log in with the administrator credentials (see below).
+    Go to:
 
-From the admin panel you can create posts, manage users, install themes, and configure the site.
+     https://vcaratti.42.fr/wp-admin
 
-## Credentials
+    Log in with the administrator credentials (see below).
+    From the admin panel you can create posts, manage users, install themes, and configure the site.
 
-Credentials are stored in two places:
+##  [  Credentials  ]
 
-- **Usernames and non-sensitive config**: `srcs/.env`
-- **Passwords**: `secrets/` directory (one password per file)
+    Credentials are stored in two places:
 
-The secret files are:
+     Usernames and non-sensitive config:    srcs/.env
+     Passwords:                             secrets/ directory (one password per file)
 
-| File | Contains |
-|---|---|
-| `secrets/db_root_password.txt` | MariaDB root password |
-| `secrets/db_password.txt` | MariaDB application user password |
-| `secrets/wp_admin_password.txt` | WordPress admin login password |
-| `secrets/wp_user_password.txt` | WordPress regular user login password |
+    The secret files are:
 
-To view a password:
+    |             File              |               Contains                |
+    |-------------------------------|---------------------------------------|
+    | secrets/db_root_password.txt  | MariaDB root password                 |
+    | secrets/db_password.txt       | MariaDB application user password     |
+    | secrets/wp_admin_password.txt | WordPress admin login password        |
+    | secrets/wp_user_password.txt  | WordPress regular user login password |
 
-```
-cat secrets/wp_admin_password.txt
-```
+    To view a password:
 
-To change a password, edit the corresponding file and run `make re` to rebuild.
+     cat secrets/wp_admin_password.txt
 
-## Checking That Services Are Running
+    To change a password, edit the corresponding file and run make re to rebuild.
 
-Check all containers:
+##  [ Checking That Services Are Running ]
 
-```
-docker compose -f srcs/docker-compose.yml ps
-```
+    Check all containers:
 
-All three (mariadb, wordpress, nginx) should show status `Up`.
+     docker compose -f srcs/docker-compose.yml ps
 
-Check individual service logs:
+    All three (mariadb, wordpress, nginx) should show status `Up`.
 
-```
-docker compose -f srcs/docker-compose.yml logs mariadb
-docker compose -f srcs/docker-compose.yml logs wordpress
-docker compose -f srcs/docker-compose.yml logs nginx
-```
+    Check individual service logs:
 
-Quick test that the site responds:
+     docker compose -f srcs/docker-compose.yml logs mariadb
+     docker compose -f srcs/docker-compose.yml logs wordpress
+     docker compose -f srcs/docker-compose.yml logs nginx
 
-```
-curl -k https://vcaratti.42.fr
-```
+    Quick test that the site responds:
 
-This should return HTML content.
+     curl -k https://vcaratti.42.fr
+
+    This should return HTML content.
