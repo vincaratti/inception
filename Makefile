@@ -1,3 +1,4 @@
+COMPOSE = docker compose -f srcs/docker-compose.yml
 DATA_DIR = /home/vcaratti/data
 
 all: setup build up
@@ -7,17 +8,28 @@ setup:
 	@mkdir -p $(DATA_DIR)/wordpress
 
 build:
-	docker compose -f srcs/docker-compose.yml build
+	$(COMPOSE) build
 
 up:
-	docker compose -f srcs/docker-compose.yml up -d
+	$(COMPOSE) up -d
 
 down:
-	docker compose -f srcs/docker-compose.yml down
+	$(COMPOSE) down
+
+start:
+	$(COMPOSE) start
+
+stop:
+	$(COMPOSE) stop
+
+logs:
+	$(COMPOSE) logs
 
 clean: down
-	docker compose -f srcs/docker-compose.yml down -v --rmi all
+	$(COMPOSE) down -v --rmi all
+	@sudo rm -rf $(DATA_DIR)/mariadb/*
+	@sudo rm -rf $(DATA_DIR)/wordpress/*
 
 re: clean all
 
-.PHONY: all setup build up down clean re
+.PHONY: all setup build up down start stop logs clean re
